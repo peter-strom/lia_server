@@ -60,7 +60,6 @@ void Server::init(uint16_t port)
   FD_SET(socket_fd, &socket_fds);
   maxFd_u16 = socket_fd;
 
-
   // listen for up to 5 requests at a time
   if (listen(socket_fd, 5) < 0)
   {
@@ -69,7 +68,7 @@ void Server::init(uint16_t port)
 #endif
     exit(0);
   }
-  #ifdef DEBUG_MSG_ON
+#ifdef DEBUG_MSG_ON
   std::cout << "init done: Waiting for a client to connect..." << std::endl;
 #endif
 }
