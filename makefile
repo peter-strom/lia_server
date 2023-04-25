@@ -1,6 +1,9 @@
 CC=g++
 CFLAGS=-Wall
-OBJS=*.cpp
+OBJS= \
+main.cpp \
+server/server.cpp \
+callbacks/callbacks.cpp 
 OUTPUT=-o main
 LIBRARY=
 

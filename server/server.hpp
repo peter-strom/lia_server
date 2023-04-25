@@ -18,7 +18,8 @@
 #include <fcntl.h>
 #include <fstream>
 #include <iostream>
-#include "config.hpp"
+#include "../config.hpp"
+
 /*
 #include <cstdio>
 #include <cstdlib>
@@ -36,7 +37,6 @@ public:
   Server();
   Server(uint16_t port);
   ~Server();
-  void init(uint16_t port);
   void event_handle();
   void set_connect_cb(void (*con_cb)(uint16_t fd));
   void set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff));
@@ -46,12 +46,21 @@ public:
 private:
   int socket_fd;
   int tempSocket_fd;
+  fd_set socket_fds;
+  fd_set tempSocket_fds;
+  uint16_t maxFd_u16;
+
   sockaddr_in servAddr;
+  sockaddr_storage clientAddr_storage;
   char rxBuffer[RX_BUFFER_SIZE];
+
+  void init(uint16_t port);
+  void handle_new_connection();
+  void handle_existing_connection(int socket_fd);
 
   void (*connect_cb)(uint16_t fd);
   void (*receive_cb)(uint16_t fd, char *buffer);
   void (*disconnect_cb)(uint16_t fd);
-}
+};
 
 #endif /* _SERVER_HPP_ */
