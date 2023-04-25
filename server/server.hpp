@@ -35,8 +35,8 @@ class Server
 {
 public:
   Server();
-  Server(uint16_t port);
   ~Server();
+  void init(uint16_t port);
   void event_handle();
   void set_connect_cb(void (*con_cb)(uint16_t fd));
   void set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff));
@@ -54,8 +54,7 @@ private:
   sockaddr_storage clientAddr_storage;
   char rxBuffer[RX_BUFFER_SIZE];
 
-  void init(uint16_t port);
-  void handle_new_connection();
+    void handle_new_connection();
   void handle_existing_connection(int socket_fd);
 
   void (*connect_cb)(uint16_t fd);

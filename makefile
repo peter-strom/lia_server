@@ -3,7 +3,7 @@ CFLAGS=-Wall
 OBJS= \
 main.cpp \
 server/server.cpp \
-callbacks/callbacks.cpp 
+server/callbacks.cpp 
 OUTPUT=-o main
 LIBRARY=
 

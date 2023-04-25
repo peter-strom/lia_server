@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
+#include "server/server.hpp"
+#include "server/callbacks.hpp"
 
 #define DEBUG_MSG_ON
 

@@ -2,12 +2,6 @@
 
 Server::Server()
 {
-  init(DEFAULT_PORT);
-}
-
-Server::Server(uint16_t port)
-{
-  init(port);
 }
 
 Server::~Server()
@@ -18,6 +12,14 @@ Server::~Server()
   close(socket_fd);
 }
 
+/**
+ * @brief initiate socket server
+ * @details 
+ * AF_INET = IPv4
+ * SOCK_STREAM = TCP
+ * 
+ * @param[in] port the desired portnumer the server listens to 
+ */
 void Server::init(uint16_t port)
 {
   bzero((char *)&servAddr, sizeof(servAddr));
@@ -123,6 +125,7 @@ void Server::handle_new_connection()
     {
       maxFd_u16 = tempSocket_fd;
     }
+    //inet_ntop(clientAddr_storage.ss_family, get_in_addr((sockaddr*)&clientAddr_storage), ...
   }
   connect_cb(tempSocket_fd);
 }

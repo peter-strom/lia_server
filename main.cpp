@@ -1,8 +1,8 @@
 
 #include "config.hpp"
-#include "server/server.hpp"
-#include "callbacks/callbacks.hpp"
-// Server side
+#include "globals.hpp"
+
+Server server;
 int main(int argc, char *argv[])
 {
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   }
   int port = atoi(argv[1]);
 
-  Server server(port);
+  server.init(port);
   server.set_connect_cb(&connect_callback);
   server.set_disconnect_cb(&disconnect_callback);
   server.set_receive_cb(&receive_callback);
