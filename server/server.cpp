@@ -78,8 +78,11 @@ void Server::init(uint16_t port)
 void Server::event_handle()
 {
   tempSocket_fds = socket_fds;
+  timeval timeout;
+  timeout.tv_sec =0;
+  timeout.tv_usec = 100000;
 
-  if (select(maxFd_u16 + 1, &tempSocket_fds, NULL, NULL, NULL) < 0)
+  if (select(maxFd_u16 + 1, &tempSocket_fds, NULL, NULL, &timeout) < 0)
   {
 #ifdef DEBUG_MSG_ON
     std::cerr << "Error [event_handle] select failed" << std::endl;
@@ -172,7 +175,7 @@ void Server::set_disconnect_cb(void (*discon_cb)(uint16_t fd))
   disconnect_cb = discon_cb;
 }
 
-uint16_t Server::transmit(uint16_t source_fd, char *txBuff)
+uint16_t Server::transmit(uint16_t source_fd, char *txBuff, size_t size)
 {
-  return send(source_fd, txBuff, sizeof(txBuff), 0);
+  return send(source_fd, txBuff, size, 0);
 }

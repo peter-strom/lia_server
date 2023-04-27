@@ -41,7 +41,7 @@ public:
   void set_connect_cb(void (*con_cb)(uint16_t fd));
   void set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff));
   void set_disconnect_cb(void (*discon_cb)(uint16_t fd));
-  uint16_t transmit(uint16_t source_fd, char *txBuff);
+  uint16_t transmit(uint16_t source_fd, char *txBuff, size_t size);
 
 private:
   int socket_fd;
@@ -54,7 +54,7 @@ private:
   sockaddr_storage clientAddr_storage;
   char rxBuffer[RX_BUFFER_SIZE];
 
-    void handle_new_connection();
+  void handle_new_connection();
   void handle_existing_connection(int socket_fd);
 
   void (*connect_cb)(uint16_t fd);
