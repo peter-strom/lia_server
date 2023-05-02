@@ -14,11 +14,11 @@ Server::~Server()
 
 /**
  * @brief initiate socket server
- * @details 
+ * @details
  * AF_INET = IPv4
  * SOCK_STREAM = TCP
- * 
- * @param[in] port the desired portnumer the server listens to 
+ *
+ * @param[in] port the desired portnumer the server listens to
  */
 void Server::init(uint16_t port)
 {
@@ -39,6 +39,9 @@ void Server::init(uint16_t port)
 #endif
     exit(0);
   }
+#ifdef DEBUG_MSG_ON
+  std::cout << "socket() file descriptor: " << socket_fd << std::endl;
+#endif
 
   // server restart fix
   int enable = 1;
@@ -79,7 +82,7 @@ void Server::event_handle()
 {
   tempSocket_fds = socket_fds;
   timeval timeout;
-  timeout.tv_sec =0;
+  timeout.tv_sec = 0;
   timeout.tv_usec = 100000;
 
   if (select(maxFd_u16 + 1, &tempSocket_fds, NULL, NULL, &timeout) < 0)
@@ -128,7 +131,7 @@ void Server::handle_new_connection()
     {
       maxFd_u16 = tempSocket_fd;
     }
-    //inet_ntop(clientAddr_storage.ss_family, get_in_addr((sockaddr*)&clientAddr_storage), ...
+    // inet_ntop(clientAddr_storage.ss_family, get_in_addr((sockaddr*)&clientAddr_storage), ...
   }
   connect_cb(tempSocket_fd);
 }

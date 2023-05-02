@@ -30,9 +30,8 @@ int main(int argc, char *argv[])
   while (1)
   {
     server.event_handle();
-    usleep(2000*1000);
-    std::cout << "hej" << std::endl;
-      server.transmit(4, (char*)"password", 9);
+    usleep(200*1000);
+     
   }
 
   return 0;
