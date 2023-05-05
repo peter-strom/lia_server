@@ -39,7 +39,7 @@ public:
   void init(uint16_t port);
   void event_handle();
   void set_connect_cb(void (*con_cb)(uint16_t fd));
-  void set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff));
+  void set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff, size_t size));
   void set_disconnect_cb(void (*discon_cb)(uint16_t fd));
   uint16_t transmit(uint16_t source_fd, char *txBuff, size_t size);
 
@@ -58,7 +58,7 @@ private:
   void handle_existing_connection(int socket_fd);
 
   void (*connect_cb)(uint16_t fd);
-  void (*receive_cb)(uint16_t fd, char *buffer);
+  void (*receive_cb)(uint16_t fd, char *buffer, size_t size);
   void (*disconnect_cb)(uint16_t fd);
 };
 

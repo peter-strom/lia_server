@@ -29,7 +29,7 @@ void connect_callback(uint16_t fd)
   }
 }
 
-void receive_callback(uint16_t fd, char *buffer)
+void receive_callback(uint16_t fd, char *buffer, size_t size)
 {
   std::cout << "[test receive callback] msg received from socket_fd: " << fd << std::endl;
 

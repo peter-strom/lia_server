@@ -158,7 +158,7 @@ void Server::handle_existing_connection(int fd)
   }
   else
   {
-    receive_cb(fd, rxBuffer);
+    receive_cb(fd, rxBuffer, sizeof(rxBuffer));
     bzero(rxBuffer, RX_BUFFER_SIZE);
   }
 }
@@ -168,7 +168,7 @@ void Server::set_connect_cb(void (*con_cb)(uint16_t fd))
   connect_cb = con_cb;
 }
 
-void Server::set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff))
+void Server::set_receive_cb(void (*rx_cb)(uint16_t fd, char *rxBuff, size_t size))
 {
   receive_cb = rx_cb;
 }
