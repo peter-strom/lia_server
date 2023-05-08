@@ -1,4 +1,5 @@
 #include "server.hpp"
+using namespace std;
 
 Server::Server()
 {
@@ -7,7 +8,7 @@ Server::Server()
 Server::~Server()
 {
 #ifdef DEBUG_MSG_ON
-  std::cout << "Server destructor" << std::endl;
+  cout << "Server destructor" << endl;
 #endif
   close(socket_fd);
 }
@@ -35,12 +36,12 @@ void Server::init(uint16_t port)
   if (socket_fd < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [init] socket creation failed" << std::endl;
+    cerr << "Error [init] socket creation failed" << endl;
 #endif
     exit(0);
   }
 #ifdef DEBUG_MSG_ON
-  std::cout << "socket() file descriptor: " << socket_fd << std::endl;
+  cout << "socket() file descriptor: " << socket_fd << endl;
 #endif
 
   // server restart fix
@@ -48,7 +49,7 @@ void Server::init(uint16_t port)
   if (setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(enable)) < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [init] SO_REUSADDR" << std::endl;
+    cerr << "Error [init] SO_REUSADDR" << endl;
 #endif
   }
 
@@ -57,7 +58,7 @@ void Server::init(uint16_t port)
   if (bind(socket_fd, (struct sockaddr *)&servAddr, sizeof(servAddr)) < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [init] binding socket to local address : " << errno << std::endl;
+    cerr << "Error [init] binding socket to local address : " << errno << endl;
 #endif
     exit(0);
   }
@@ -69,12 +70,12 @@ void Server::init(uint16_t port)
   if (listen(socket_fd, 5) < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [init] init listen failed : " << std::endl;
+    cerr << "Error [init] init listen failed : " << endl;
 #endif
     exit(0);
   }
 #ifdef DEBUG_MSG_ON
-  std::cout << "init done: Waiting for a client to connect..." << std::endl;
+  cout << "init done: Waiting for a client to connect..." << endl;
 #endif
 }
 
@@ -88,7 +89,7 @@ void Server::event_handle()
   if (select(maxFd_u16 + 1, &tempSocket_fds, NULL, NULL, &timeout) < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [event_handle] select failed" << std::endl;
+    cerr << "Error [event_handle] select failed" << endl;
 #endif
     exit(0);
   }
@@ -112,7 +113,7 @@ void Server::event_handle()
 void Server::handle_new_connection()
 {
 #ifdef DEBUG_MSG_ON
-  std::cout << "new connection socket_fd: " << socket_fd << std::endl;
+  cout << "new connection socket_fd: " << socket_fd << endl;
 #endif
   socklen_t addrLen = sizeof(clientAddr_storage);
   tempSocket_fd = accept(socket_fd, (sockaddr *)&clientAddr_storage, &addrLen);
@@ -120,7 +121,7 @@ void Server::handle_new_connection()
   if (tempSocket_fd < 0)
   {
 #ifdef DEBUG_MSG_ON
-    std::cerr << "Error [handle_new_connection] accept failed" << std::endl;
+    cerr << "Error [handle_new_connection] accept failed" << endl;
 #endif
     exit(0);
   }
@@ -145,7 +146,7 @@ void Server::handle_existing_connection(int fd)
     if (rxBytes < 0) // fail
     {
 #ifdef DEBUG_MSG_ON
-      std::cerr << "Error [handle_existing_connection] recv failed" << std::endl;
+      cerr << "Error [handle_existing_connection] recv failed" << endl;
 #endif
     }
     else

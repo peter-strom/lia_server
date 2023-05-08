@@ -1,6 +1,7 @@
 
 #include "config.hpp"
 #include "globals.hpp"
+using namespace std;
 
 Server server;
 Clients clients;
@@ -8,15 +9,15 @@ int main(int argc, char *argv[])
 {
 
 #ifdef DEBUG_MSG_ON
-  std::cout << "Server starting, debugging messages on" << std::endl;
+  cout << "Server starting, debugging messages on" << endl;
 #else
-  std::cout << "Server starting, debugging messages off" << std::endl;
+  cout << "Server starting, debugging messages off" << endl;
 #endif
   int port = 555;
   // portnumber
   if (argc != 2)
   {
-    std::cerr << "Using default port" << port << std::endl;
+    cerr << "Using default port" << port << endl;
   }
   else
   {

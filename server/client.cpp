@@ -1,4 +1,5 @@
 #include "client.hpp"
+using namespace std;
 
 Client::Client()
 {
@@ -13,7 +14,7 @@ Client::Client(uint16_t fd)
 Client::~Client()
 {
 #ifdef DEBUG_MSG_ON
-  std::cout << "Client destructor" << std::endl;
+  cout << "Client destructor" << endl;
 #endif
 }
 

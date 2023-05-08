@@ -1,66 +1,74 @@
 #include "callbacks.hpp"
 #include "../globals.hpp"
+using namespace std;
 
 void connect_callback(uint16_t fd)
 {
-  std::cout << "[test connect callback]" << std::endl;
+  cout << "[test connect callback]" << endl;
   Client client;
 
   clients.add_client(fd);
   if (clients.get_client(fd, &client))
   {
-    std::cout << "client found in list " << fd << std::endl;
+    cout << "client found in list " << fd << endl;
     client.set_auth(false);
 
     if (client.get_auth())
     {
-      std::cout << "client authorized" << std::endl;
+      cout << "client authorized" << endl;
     }
     else
     {
-      std::cout << "client not authorized" << std::endl;
+      cout << "client not authorized" << endl;
       char msg[] = "password";
       server.transmit(fd, msg, 14);
     }
   }
   else
   {
-    std::cout << "client not found in list " << std::endl;
+    cout << "client not found in list " << endl;
   }
 }
 
 void receive_callback(uint16_t fd, char *buffer, size_t size)
 {
-  std::cout << "[test receive callback] msg received from socket_fd: " << fd << std::endl;
-
+  cout << "[test receive callback] msg received from socket_fd: " << fd << endl;
+#ifdef DEBUG_MSG_ON
+  cout << "Message size: " << size << " bytes." << endl;
+#endif
   Client client;
   if (clients.get_client(fd, &client))
   {
-    std::cout << "client found in list " << std::endl;
+    cout << "client found in list " << endl;
 
     if (client.get_auth())
     {
-      std::cout << "client authorized" << std::endl;
+      cout << "client authorized" << endl;
+
+      if (size < 10)
+      {
+        cout << "msg: " << buffer << endl;
+      }
     }
     else
     {
-      std::cout << "client not authorized" << std::endl;
+      cout << "client not authorized" << endl;
       if (strcmp(buffer, "PRODUCT_Nsecret handshake") == 0)
       {
-        std::cout << "client autorized!" << fd << std::endl;
+        cout << "client autorized!" << fd << endl;
         client.set_auth(true);
       }
     }
   }
   else
   {
-    std::cout << "client not found in list " << std::endl;
+    cout << "client not found in list " << endl;
   }
 
-  std::cout << "message: \"" << buffer << "\" from client: " << fd << std::endl;
+  cout << "message: \"" << buffer << "\" from client: " << fd << endl;
 }
 
 void disconnect_callback(uint16_t fd)
 {
-  std::cout << "[disconnect callback] client: " << fd << std::endl;
+  cout << "[disconnect callback] client: " << fd << endl;
 }
