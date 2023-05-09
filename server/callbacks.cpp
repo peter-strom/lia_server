@@ -1,5 +1,7 @@
 #include "callbacks.hpp"
 #include "../globals.hpp"
+#include "../protobuf/testmsg.pb.h"
+
 using namespace std;
 
 void connect_callback(uint16_t fd)
@@ -32,10 +34,22 @@ void connect_callback(uint16_t fd)
 
 void receive_callback(uint16_t fd, char *buffer, size_t size)
 {
+  
   cout << "[test receive callback] msg received from socket_fd: " << fd << endl;
 #ifdef DEBUG_MSG_ON
   cout << "Message size: " << size << " bytes." << endl;
+  cout << "Message in hex: "<< hex << buffer << endl;
+  for(uint8_t i = 0; i< size; i++)
+  {
+    //cout << "Message in hex: "<< hex << (int8_t)buffer[i] << endl;
+    printf("%2x ",(uint8_t)buffer[i]);
+  }
+  printf("\r\n");
 #endif
+  testmsg::Testmsg msg;
+  msg.ParseFromString(buffer);
+  cout << "temp: " << dec << msg.temperature() << " humidity: " << msg.humidity() << " time: " << msg.timestamp() << endl; 
+
   Client client;
   if (clients.get_client(fd, &client))
   {
@@ -47,7 +61,7 @@ void receive_callback(uint16_t fd, char *buffer, size_t size)
 
       if (size < 10)
       {
-        cout << "msg: " << buffer << endl;
+        cout << " msg: " << buffer << endl;
       }
     }
     else
@@ -65,7 +79,7 @@ void receive_callback(uint16_t fd, char *buffer, size_t size)
     cout << "client not found in list " << endl;
   }
 
-  cout << "message: \"" << buffer << "\" from client: " << fd << endl;
+   cout << "size: " << size <<  " message: \"" << buffer << "\" from client: " << fd << endl;
 }
 
 void disconnect_callback(uint16_t fd)

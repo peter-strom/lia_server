@@ -5,9 +5,10 @@ main.cpp \
 server/server.cpp \
 server/callbacks.cpp \
 server/client.cpp \
-server/clients.cpp
+server/clients.cpp \
+protobuf/testmsg.pb.cc
 OUTPUT=-o main
-LIBRARY=
+LIBRARY= -lprotobuf
 
 all: make run
 
