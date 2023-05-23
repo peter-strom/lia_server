@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "server/server.hpp"
 #include "server/callbacks.hpp"
-#include "protobuf/testmsg.pb.h"
+#include "protobuf/measure.pb.h"
 
 #define DEBUG_MSG_ON
 

@@ -6,7 +6,7 @@ server/server.cpp \
 server/callbacks.cpp \
 server/client.cpp \
 server/clients.cpp \
-protobuf/testmsg.pb.cc
+protobuf/measure.pb.cc
 OUTPUT=-o main
 LIBRARY= -lprotobuf
 
